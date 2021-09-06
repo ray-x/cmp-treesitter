@@ -52,7 +52,7 @@ source.complete = function(self, params, callback)
       end
     end
     callback({items = items, isIncomplete = processing})
-  end), processing and 100 or 0)
+  end), processing and 10 or 0)
 end
 
 --- _get_treesitters
