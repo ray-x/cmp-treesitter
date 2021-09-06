@@ -24,7 +24,6 @@ function treesitter.new(bufnr)
   self.fname = fname
   self.ftime = 0
   self.processing = true
-  cache:set(bufnr, self)
   return self
 end
 
@@ -58,6 +57,8 @@ function treesitter.get_nodes(self)
   end
   self.words = candidates
   self.processing = false
+  self.ftime = vim.fn.getftime(self.fname)
+
   cache:set(self.bufnr, self)
   return self
 end
