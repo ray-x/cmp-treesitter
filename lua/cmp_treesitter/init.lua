@@ -27,6 +27,7 @@ source.get_keyword_pattern = function(_, params)
 end
 
 source.complete = function(self, params, callback)
+  params.option = vim.tbl_deep_extend('keep', params.option, defaults)
   vim.validate({
     keyword_pattern = {
       params.option.keyword_pattern, 'string', '`opts.keyword_pattern` must be `string`'
