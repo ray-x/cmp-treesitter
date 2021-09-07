@@ -45,10 +45,12 @@ function treesitter.get_nodes(self)
       local parent = node:parent()
       local grandparent = parent and parent:parent() or nil
       local word = vim.treesitter.get_node_text(node, 0)
-      if word then
+      local kind = query.captures[i]
+
+      if word and kind ~= 'punctuation.bracket' and kind ~= 'punctuation.delimiter' then
         table.insert(candidates, {
           word = word,
-          kind = query.captures[i],
+          kind = kind,
           parent = parent and vim.treesitter.get_node_text(parent, 0) or nil,
           grandparent = grandparent and vim.treesitter.get_node_text(grandparent, 0) or nil
         })
@@ -59,8 +61,15 @@ function treesitter.get_nodes(self)
   self.processing = false
   self.ftime = vim.fn.getftime(self.fname)
 
+  -- print("get nodes", vim.inspect(self))
   cache:set(self.bufnr, self)
   return self
+end
+
+function treesitter.async_get(self)
+  return coroutine.create(function()
+    return self:get_nodes()
+  end)
 end
 
 return treesitter.new()
