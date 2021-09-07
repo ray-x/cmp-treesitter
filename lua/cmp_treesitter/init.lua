@@ -47,7 +47,7 @@ source.complete = function(self, params, callback)
     -- note : coroutine does not help with multitasking
     local flg, tsnds = coroutine.resume(async_ts)
     -- print('f', flg)
-    if flg then
+    if flg and tsnds.words ~= nil then
       for _, word in ipairs(tsnds.words) do
         if not words[word.word] and input ~= word then
           words[word.word] = true
