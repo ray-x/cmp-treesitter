@@ -51,7 +51,11 @@ source.complete = function(self, params, callback)
       for _, word in ipairs(tsnds.words) do
         if not words[word.word] and input ~= word then
           words[word.word] = true
-          table.insert(items, {label = word.word, dup = 0})
+          local w = word.word
+          if #w > 25 then
+            w = string.sub(w, 1, 25) .. ''
+          end
+          table.insert(items, {label = w, insertText = word.word, dup = 0})
         end
       end
     end
