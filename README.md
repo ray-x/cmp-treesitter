@@ -1,6 +1,6 @@
 # cmp-treesitter
 
-nvim-cmp source for treesitter nodes.
+nvim-cmp source for treesitter nodes. Using all treesitter highlight nodes as completion candicates.
 
 # Setup
 
