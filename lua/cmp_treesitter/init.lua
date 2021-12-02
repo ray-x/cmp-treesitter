@@ -18,10 +18,8 @@ end
 source.get_keyword_pattern = function(_, params)
   params.option = vim.tbl_deep_extend('keep', params.option, defaults)
   vim.validate({
-    keyword_pattern = {
-      params.option.keyword_pattern, 'string', '`opts.keyword_pattern` must be `string`'
-    },
-    get_bufnrs = {params.option.get_bufnrs, 'function', '`opts.get_bufnrs` must be `function`'}
+    keyword_pattern = { params.option.keyword_pattern, 'string' },
+    get_bufnrs = { params.option.get_bufnrs, 'function' }
   })
   return params.option.keyword_pattern
 end
@@ -29,10 +27,8 @@ end
 source.complete = function(self, params, callback)
   params.option = vim.tbl_deep_extend('keep', params.option, defaults)
   vim.validate({
-    keyword_pattern = {
-      params.option.keyword_pattern, 'string', '`opts.keyword_pattern` must be `string`'
-    },
-    get_bufnrs = {params.option.get_bufnrs, 'function', '`opts.get_bufnrs` must be `function`'}
+    keyword_pattern = { params.option.keyword_pattern, 'string' },
+    get_bufnrs = { params.option.get_bufnrs, 'function' }
   })
 
   local processing = true
