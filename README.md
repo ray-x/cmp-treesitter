@@ -1,6 +1,7 @@
 # cmp-treesitter
 
 nvim-cmp source for treesitter nodes. Using all treesitter highlight nodes as completion candicates.
+LRU cache is used to improve performance.
 
 # Setup
 
