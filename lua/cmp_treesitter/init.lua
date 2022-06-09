@@ -58,9 +58,9 @@ source.complete = function(self, params, callback)
     -- print('f', flg)
     if flg and tsnds.words ~= nil then
       for _, word in ipairs(tsnds.words) do
-        local w = trim(word.word or '')
-        if not words[w] and input ~= word then
-          words[w] = true
+        if not words[word.word] and input ~= word then
+          words[word.word] = true
+          local w = word.word
           if #w > 25 then
             w = string.sub(w, 1, 25) .. ''
           end
