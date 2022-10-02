@@ -62,7 +62,7 @@ source.complete = function(self, params, callback)
           words[word.word] = true
           local w = word.word
           if #w > 25 then
-            w = string.sub(w, 1, 25) .. ''
+            w = string.sub(w, 1, 25) .. '…'
           end
           table.insert(items, { label = w, insertText = word.word, dup = 0 })
         end
