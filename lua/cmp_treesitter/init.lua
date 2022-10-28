@@ -16,6 +16,7 @@ source.new = function()
 end
 
 source.get_keyword_pattern = function(_, params)
+  params.option = params.option or {}
   params.option = vim.tbl_deep_extend('keep', params.option, defaults)
   vim.validate({
     keyword_pattern = {
