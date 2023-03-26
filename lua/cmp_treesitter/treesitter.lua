@@ -40,7 +40,9 @@ function treesitter.get_nodes(self)
   end
   local candidates = {}
   for _, tree in pairs(parser:parse()) do
-    local query = vim.treesitter.get_query(parser:lang(), 'highlights')
+    local query = (vim.fn.has('nvim-0.9') == 1) and
+      vim.treesitter.query.get(parser:lang(), 'highlights') or
+      vim.treesitter.get_query(parser:lang(), 'highlights')
 
     for i, node in query:iter_captures(tree:root(), 0) do
       local parent = node:parent()
