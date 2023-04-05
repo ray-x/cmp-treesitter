@@ -65,7 +65,8 @@ source.complete = function(self, params, callback)
           if #w > 25 then
             w = string.sub(w, 1, 25) .. '…'
           end
-          table.insert(items, { label = w, insertText = word.word, dup = 0 })
+          local camel_cased_kind = word.kind:gsub("%.", " "):gsub("(%w)(%w*)", function(first, rest) return first:upper() .. rest:lower() end):gsub(" ", "")
+          table.insert(items, { label = w, insertText = word.word, dup = 0, cmp = { kind_text = camel_cased_kind }})
         end
       end
     end
