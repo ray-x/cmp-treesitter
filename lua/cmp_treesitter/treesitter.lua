@@ -40,23 +40,28 @@ function treesitter.get_nodes(self)
   end
   local candidates = {}
   for _, tree in pairs(parser:parse()) do
-    local query = (vim.fn.has('nvim-0.9') == 1) and
-      vim.treesitter.query.get(parser:lang(), 'highlights') or
-      vim.treesitter.get_query(parser:lang(), 'highlights')
+    local query
+    if vim.fn.has('nvim-0.9') == 1 then
+      query = vim.treesitter.query.get(parser:lang(), 'highlights')
+    else
+      query = vim.treesitter.get_query(parser:lang(), 'highlights')
+    end
 
-    for i, node in query:iter_captures(tree:root(), 0) do
-      local parent = node:parent()
-      local grandparent = parent and parent:parent() or nil
-      local word = vim.treesitter.get_node_text(node, 0)
-      local kind = query.captures[i]
+    if query then
+      for i, node in query:iter_captures(tree:root(), 0) do
+        local parent = node:parent()
+        local grandparent = parent and parent:parent() or nil
+        local word = vim.treesitter.get_node_text(node, 0)
+        local kind = query.captures[i]
 
-      if word and kind ~= 'punctuation.bracket' and kind ~= 'punctuation.delimiter' then
-        table.insert(candidates, {
-          word = word,
-          kind = kind,
-          parent = parent and vim.treesitter.get_node_text(parent, 0) or nil,
-          grandparent = grandparent and vim.treesitter.get_node_text(grandparent, 0) or nil
-        })
+        if word and kind ~= 'punctuation.bracket' and kind ~= 'punctuation.delimiter' then
+          table.insert(candidates, {
+            word = word,
+            kind = kind,
+            parent = parent and vim.treesitter.get_node_text(parent, 0) or nil,
+            grandparent = grandparent and vim.treesitter.get_node_text(grandparent, 0) or nil
+          })
+        end
       end
     end
   end
