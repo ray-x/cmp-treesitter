@@ -34,7 +34,7 @@ function treesitter.get_nodes(self)
     return result
   end
 
-  local ok, parser = pcall(vim.treesitter.get_parser)
+  local ok, parser = pcall(vim.treesitter.get_parser, self.bufnr)
   if not ok then
     return {}
   end
@@ -48,18 +48,18 @@ function treesitter.get_nodes(self)
     end
 
     if query then
-      for i, node in query:iter_captures(tree:root(), 0) do
+      for i, node in query:iter_captures(tree:root(), self.bufnr) do
         local parent = node:parent()
         local grandparent = parent and parent:parent() or nil
-        local word = vim.treesitter.get_node_text(node, 0)
+        local word = vim.treesitter.get_node_text(node, self.bufnr)
         local kind = query.captures[i]
 
         if word and kind ~= 'punctuation.bracket' and kind ~= 'punctuation.delimiter' then
           table.insert(candidates, {
             word = word,
             kind = kind,
-            parent = parent and vim.treesitter.get_node_text(parent, 0) or nil,
-            grandparent = grandparent and vim.treesitter.get_node_text(grandparent, 0) or nil
+            parent = parent and vim.treesitter.get_node_text(parent, self.bufnr) or nil,
+            grandparent = grandparent and vim.treesitter.get_node_text(grandparent, self.bufnr) or nil
           })
         end
       end
